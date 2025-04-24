@@ -1,6 +1,6 @@
 # Copyright (c) OpenMMLab. All rights reserved.
 from mmdeploy.utils import get_root_logger
-
+import traceback
 
 def optimize_onnx(ctx, graph, params_dict, torch_out):
     """The optimize callback of the onnx model."""
@@ -15,6 +15,7 @@ def optimize_onnx(ctx, graph, params_dict, torch_out):
         ts_optimizer.onnx._jit_pass_common_subgraph_elimination(
             graph, params_dict)
     except ImportError:
+        traceback.print_exc()
         logger.warning(
             'Can not optimize model, please build torchscipt extension.\n'
             'More details: '
